@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {format} from 'date-fns';
-import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import CardFooter from '../Components/CardFooter';
-import GlobalStyle from '../utils/GlobalStyle';
+import GlobalStyle from '../Components/Styles/GlobalStyle';
 
 const Home = () => {
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, 'EEEE dd MMMM');
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const [refresh, setRefresh] = useState(false);
+
+  const currentDate = new Date();
+  const formattedDate = format(currentDate, 'EEEE dd MMMM');
 
   const fetchData = async () => {
     try {
@@ -37,6 +38,10 @@ const Home = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [refresh]);
+
   const handleRefresh = () => {
     setRefresh(!refresh);
   };
@@ -44,10 +49,6 @@ const Home = () => {
   const navigateToDisplayScreen = () => {
     navigation.navigate('Detail', {data});
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [refresh]);
 
   return (
     <View style={styles.body}>

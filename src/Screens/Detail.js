@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -14,12 +14,13 @@ import HTML from 'react-native-render-html';
 import CloseIcon from 'react-native-vector-icons/Fontisto';
 import ShareIcon from 'react-native-vector-icons/Feather';
 import CardFooter from '../Components/CardFooter';
-import GlobalStyle from '../utils/GlobalStyle';
+import GlobalStyle from '../Components/Styles/GlobalStyle';
 
 const Detail = () => {
   const windowWidth = useWindowDimensions().width;
   const navigation = useNavigation();
   const route = useRoute();
+
   const {data} = route.params || {};
 
   const goBackHome = () => {
@@ -35,14 +36,14 @@ const Detail = () => {
       <ScrollView>
         <ImageBackground
           style={styles.thumbNailImage}
-          source={{uri: data?.thumbNailImage}}>
+          source={data?.thumbNailImage ? {uri: data?.thumbNailImage} : null}>
           <View style={styles.headerContainer}>
             <Text style={styles.updateText}>MAJOR UPDATE</Text>
             <Text style={styles.subtitleText}>{data?.subTitle}</Text>
           </View>
         </ImageBackground>
         <View style={styles.cardFooterContainer}>
-          <CardFooter data={data} handleRefresh={null} />
+          <CardFooter data={data ? data : null} handleRefresh={null} />
         </View>
         <View style={styles.htmlContainer}>
           <HTML
@@ -50,10 +51,16 @@ const Detail = () => {
             contentWidth={windowWidth}
             tagsStyles={tagsStyles}
           />
-          <Image source={{uri: data?.mainImage}} style={styles.mainImage} />
+          <Image
+            source={data?.mainImage ? {uri: data?.mainImage} : null}
+            style={styles.mainImage}
+          />
         </View>
         <View style={styles.detailFooter}>
-          <Image source={{uri: data?.logo}} style={styles.iconImage} />
+          <Image
+            source={data?.logo ? {uri: data?.logo} : null}
+            style={styles.iconImage}
+          />
           <Text style={[GlobalStyle.blackText, {fontSize: 18}]}>
             {data?.title}
           </Text>

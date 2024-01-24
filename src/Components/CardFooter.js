@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import GlobalStyle from '../utils/GlobalStyle';
+import GlobalStyle from './Styles/GlobalStyle';
 
 const CardFooter = ({data, handleRefresh}) => {
   return (
